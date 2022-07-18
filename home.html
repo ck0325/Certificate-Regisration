@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel='stylesheet' type='text/css' media='screen' href='index.css'>
+        <style>
+            #signout{
+                background-color: red;
+            }
+            .content-table{
+                border-collapse: collapse;
+                margin: 25px 0;
+                font-size: 0.9em;
+                min-width:400px;
+                border-radius: 5px 5px 0 0;
+                overflow: hidden;
+                box-shadow: 0 0 20px  rgba(0,0,0,0);
+            }
+            .content-table thead tr{
+                background-color: #009879;
+                color: #ffffff;
+                text-align: left;
+                font-weight: bold;
+            }
+
+            .content-table th,
+            .content-table td{
+                padding: 12px 15px;
+
+            }
+            .content-table tbody tr{
+                border-bottom: 1px solid #dddddd;
+
+            }
+
+            .content-table tbody tr:nth-of-type(even){
+                background-color: #f3f3f3;
+            }
+            .content-table tbody tr:last-of-type{
+                border-bottom: 2px solid #009879;
+            }
+
+            .content-table tbody tr.active-row{
+                font-weight: bold;
+                color: #009879;
+            }
+            .delete{
+                cursor: pointer;
+                color: red;
+                border: 2px solid red;
+                background-color: white;
+                font-size:40px
+            }
+            .delete:hover{
+                color: white;
+                background-color: red;
+            }
+            button,input[type=button] {
+                background-color: #009879;
+                color: white;
+                padding: 12px 20px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                float: left;
+               
+            }
+            button {
+                background-color: #009879;
+                color: white;
+                padding: 12px 20px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                float: right;
+               
+            }
+        </style>
+        
+    </head>
+    <body>
+        <script type="module" src='home.js'></script>
+        Welcome <p id="msg"></p>
+        <br>
+        
+        
+        <input type="button" name="b1" value="AddCertifications" id="addcerts">
+        <!--
+        <span><label for="certificationtype">&ensp; CertificationType</label></span>> -->
+        <span><button id="signout">Signout</button></span>
+        <br>
+        <br>
+        <!--
+            <select id="cert-type" name="certificationLevel">
+                <option value="0">Select Cloud Type</option>
+                <option value="AWS">AWS (Amazon Web Services)</option>
+                <option value="GCP">GCP (Google Cloud Platform)</option>
+                <option value="AZURE">AZURE (Microsoft Azure)</option>
+            </select>
+        -->
+    <table class="content-table" id="table">
+        <thead>
+        <tr>
+            <th>Certification Id</th>
+            <th>Certification Level</th>
+            <th>Certification Name</th>
+            <th>Certification type</th>
+            <th>Date of Certification</th>
+            <th>Expiry of Certification</th>
+            <th>Validity</th>
+            <th>Url of certificate</th>
+            <th>Delete</th>
+
+            
+
+        </tr>
+        </thead>
+        <tbody id="mytable">
+        </tbody>
+        
+
+        </tbody>
+    </table>
+
+    
+
+
+<script> 
+const urlParams = new URLSearchParams(window.location.search);
+        var result = urlParams.get('result');
+        console.log(result);
+        document.getElementById('msg').innerHTML=result;                       
+        
+        function deleteRow(r){
+            deleteRows(r);
+        }
+        
+
+
+        
+        </script>
+   
+</body>
+
+   
+
+</html>
