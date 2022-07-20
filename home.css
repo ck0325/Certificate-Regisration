@@ -1,0 +1,258 @@
+
+             @import url(
+'https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700&display=swap');
+* {
+            margin: 0;
+            padding: 0;
+            outline: none;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+        nav {
+            background: #009879;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px;
+            padding: 0 100px;
+        }
+  
+        /* Styling the logo */
+        nav .logo {
+            color: #fff;
+            font-size: 30px;
+            font-weight: 600;
+            letter-spacing: -1px;
+        }
+  
+        /* Styling all the nav items as a whole */
+        nav .nav-items {
+            display: flex;
+            flex: 1;
+            padding: 0 0 0 200px;
+        }
+  
+        nav .nav-items li {
+            list-style: none;
+            padding: 0 10px;
+            color: #fff;
+            font-size: 15px;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        /* Styling the list items in the nav tag */
+        nav .licon li {
+            list-style: none;
+            padding: 0 10px;
+        }
+        nav  .nav-items li a {
+            color: #fff;
+            font-size: 15px;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        /* Styling each list items */
+        nav .licon li a {
+            color: #fff;
+            font-size: 15px;
+            font-weight: 500;
+            text-decoration: none;
+        }
+  
+        /* Setting the hover colour on the list items*/
+          
+        nav .licon li a:hover {
+            color: #19191b;
+        }
+          
+        nav .searchbar {
+            position: relative;
+        }
+  
+        /* Styling the search box where the 
+            input would be given */
+        nav .searchbar input[type="text"] {
+            border: 0;
+            padding: 0;
+            width: 0px;
+            height: 35px;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+  
+        /* Styling the search bar icon */
+        nav .searchbar .icon {
+            display: flex;
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 35px;
+            height: 100%;
+            background: none;
+            border-radius: 3px;
+            color: #fff;
+            transition: all 0.5s 0.3s ease;
+        }
+          
+        nav .searchbar .icon i {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+        }
+          
+        nav .searchbar .icon.active {
+            background: #062333;
+            transition: all 0.3s ease;
+        }
+          
+        nav .searchbar input[type="text"].active {
+            width: 250px;
+            padding: 0 10px;
+            transition: all 0.5s 0.2s ease;
+        }
+          
+        nav .licon li {
+            list-style: none;
+            display: flex;
+        }
+          
+        nav .licon li a {
+            padding: 0 20px;
+        }
+  
+        /* Changing the colour of the login 
+            icon when hovered over*/
+          
+        
+            /* #signout{
+                background-color: red;
+            } */
+            .content-table{
+                
+                border-collapse: collapse;
+                margin: 25px 0;
+                font-size: 0.9em;
+                /* min-width:400px; */
+                border-radius: 5px 5px 0 0;
+                overflow: hidden;
+                box-shadow: 0 0 20px  rgba(0,0,0,0);
+                /* margin-left: auto;
+  margin-right: auto; */
+  width: 100%;
+            }
+            .content-table thead tr{
+                background-color: #009879;
+                color: #ffffff;
+                text-align: left;
+                font-weight: bold;
+            }
+
+            .content-table th,
+            .content-table td{
+                padding: 12px 15px;
+
+            }
+            .content-table tbody tr{
+                border-bottom: 1px solid #dddddd;
+
+            }
+
+            .content-table tbody tr:nth-of-type(even){
+                background-color: #f3f3f3;
+            }
+            .content-table tbody tr:last-of-type{
+                border-bottom: 2px solid #009879;
+            }
+
+            .content-table tbody tr.active-row{
+                font-weight: bold;
+                color: #009879;
+            }
+            .delete{
+                cursor: pointer;
+                color: red;
+                border: 2px solid red;
+                background-color: white;
+                font-size:40px
+            }
+            .delete:hover{
+                color: white;
+                background-color: red;
+            }
+            button,input[type=button] {
+                background-color: #009879;
+                color: white;
+                padding: 12px 20px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                float: left;
+               
+            }
+            button {
+                background-color: #009879;
+                color: white;
+                padding: 12px 20px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                float: right;
+               
+            }
+            #none{
+                display: none;
+            }
+
+            
+  .popup{
+    width: 400px;
+    background:  #009879;
+    border-radius: 6px;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%,-50%) scale(0.1);
+    text-align: center;
+    padding: 0 30px 30px;
+    color: #333;
+    visibility: hidden;
+    transition: transform 0.4s, top 0.4s;
+  }
+
+  .open-popup{
+    visibility: visible;
+    top: 50%;
+    transform: translate(-50%,-50%) scale(1);
+  }
+
+  .popup img{
+    width: 100px;
+    margin-top: -50px;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+
+  .popup h2{
+    font-size: 38px;
+    font-weight: 500;
+    margin: 30px 0 10px;
+  }
+
+  .popup button{
+    width: 100%;
+    margin-top: 50px;
+    padding: 10px 0;
+    background: #6fd649;
+    color: #fff;
+    border: 0;
+    outline: none;
+    font-size: 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 5px 5px rgba(0,0,0,0.2);
+  }
+    
+        

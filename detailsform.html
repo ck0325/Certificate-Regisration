@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+      <head>
+        <meta character="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE-edge">
+        <meta name="viewport" content="width=device-width, intial-scale=1.0">
+        <title>Add data</title>
+        <link rel='stylesheet' type='text/css' media='screen' href='detailsform.css'>
+      </head>
+
+      <body>
+
+
+        <div class="popup" id="popup">
+            <img id="image" src="tick.png" >
+            <h2 id="status1">thank you</h2>
+            <p id="status2">Your details submitted successully</p>
+            <button type="button" id="ok">OK</button>
+        </div>
+
+
+        <h2>Certificate Details Form</h2>
+        <div class="container" id="certificate-filling-form">
+          
+            <label for="certificationtype">CertificationType</label>
+            <select id="type" name="certificationLevel">
+                <option value="AWS">AWS (Amazon Web Services)</option>
+                <option value="GCP">GCP (Google Cloud Platform)</option>
+                <option value="AZURE">AZURE (Microsoft Azure)</option>
+            </select>
+
+            <label for="text">Certification Level</label>
+            <input type="text" name="text" id="level" placeholder="Certification Level..." required>
+
+            <label for="text">Certification Name</label>
+            <input type="text" name="text" id="name" placeholder="Certification Name..." required>
+
+            <label for="CertID">Certification ID</label>
+            <input type="alphanumeric" name="certification id" id="id" placeholder="Certification ID" required>
+
+            <label for="date">Date of Certification</label>
+            <input type="date" name="date" id="date" required> <br>
+
+            <label for="date">Expiry Date of Certification</label>
+            
+            <input type="number" id="exdate" min="1900" max="2099" step="1" value="2016" /><br>
+            <label for="number">Validity in years</label>
+            <input type="number" name="number" id="validity" min="1" max="10" value="0" required>
+
+            <label for = "file">Choose File</label>
+
+
+                   <button id="sel-cert">Choose File</button>
+                   <p id="cert-file-name">Name of file</p>
+                   <label id="upprogress"></label> 
+
+            
+            <hr>
+            <button type = "submit" id="submit">submit</button>
+        
+        </div>
+
+        <input type="button" name="b2" value="Back" id="back">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ <!---------------------------------------------------------------firebase--------------------------------------------------------------------->
+
+ <script type="module">
+
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-app.js";
+    
+    const firebaseConfig = {
+      apiKey: "AIzaSyBO-Xq7Ldq5rXqtKHJvy3FSB4qCJUyVPrc",
+      authDomain: "loginauth-82a4f.firebaseapp.com",
+      databaseURL: "https://loginauth-82a4f-default-rtdb.firebaseio.com",
+      projectId: "loginauth-82a4f",
+      storageBucket: "loginauth-82a4f.appspot.com",
+      messagingSenderId: "839624208104",
+      appId: "1:839624208104:web:e66e3081ce68b07b2f235d"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+
+    import{getFirestore, doc, getDoc, setDoc, collection, addDoc, updateDoc, deleteDoc, deleteField} from "https://www.gstatic.com/firebasejs/9.9.0/firebase-firestore.js";
+    import {getStorage, ref as sRef, uploadBytesResumable, getDownloadURL} from "https://www.gstatic.com/firebasejs/9.9.0/firebase-storage.js";
+
+    const db=getFirestore();
+    var popup=document.getElementById("popup")
+    const urlParams = new URLSearchParams(window.location.search);
+     const result = urlParams.get('result');
+     var year;
+     var month;
+     var d;
+     var expiry;
+
+     document.getElementById('date').addEventListener('change',function(){
+
+         var date=document.getElementById('date').value;
+         year=date.split("-")[0];
+         month=date.split("-")[1];
+         d=date.split("-")[2]
+    
+         document.getElementById('exdate').value=year;
+         document.getElementById('exdate').max=year+10;
+         document.getElementById('exdate').min=year;
+
+         
+        
+     })
+
+     document.getElementById('exdate').addEventListener('change',function(){
+        document.getElementById('validity').value=document.getElementById('exdate').value-year;
+        expiry=document.getElementById('exdate').value+"-"+month+"-"+d;
+        console.log(expiry)
+
+     })
+
+     
+
+     var files = [];
+            var reader = new FileReader();
+
+            var SelBtn = document.getElementById('sel-cert');
+            var file_name=document.getElementById('cert-file-name');
+
+            var input = document.createElement('input');
+            input.type = 'file';
+
+            input.onchange = e => {
+                files = e.target.files;
+
+                var name = GetFileName(files[0]);
+
+                file_name.innerHTML= name;
+              
+
+                reader.readAsDataURL(files[0]);
+            }
+
+            SelBtn.onclick = function(){
+                input.click();
+            }
+
+            function GetFileName(file) {
+                
+                return file.name;
+            }
+
+
+
+//--------------------------------------------Adding certificates in to firestore and storage------------------------------------------
+
+    async function AddDocument_AutoID(){
+        var ref=doc(db, result,document.getElementById('id').value);
+        const docRef=await setDoc(
+            ref, {
+                certificationtype:document.getElementById('type').value,
+                certificationlevel:document.getElementById('level').value,
+                certificationname:document.getElementById('name').value,
+                certificationid:document.getElementById('id').value,
+                dateofcertification:document.getElementById('date').value,
+                expiryofcertification:expiry,
+                validity:document.getElementById('validity').value
+
+            }
+        )
+        .then(()=>{
+           
+            const request=new XMLHttpRequest();
+    request.open("GET", "https://us-central1-send-email-487da.cloudfunctions.net/sendMail?dest="+result+"&type=submit");
+    request.send();                                                         
+    request.onload=()=>{
+      if(request.status===200){
+       // alert("Certification submission mail has been sent");
+
+    }else{
+      //alert("Problem in sending welcome mail");
+    }
+  }
+        })
+        .catch((error)=>{
+            alert("No"+error)
+        });
+
+        var ImgToUpload = files[0];
+        var ImgName = document.getElementById('id').value;
+        const metaData = {
+                    contentType: ImgToUpload.type
+                }
+        
+                const storage = getStorage();
+
+                const storageRef = sRef(storage, result+"/"+ImgName);
+
+                const UploadTask = uploadBytesResumable(storageRef, ImgToUpload, metaData);
+
+                UploadTask.on('state-changed', (snapshot)=>{
+                    var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    document.getElementById('upprogress').innerHTML = "Upload "+ progress + "%";
+
+                },
+                (error) => {
+                    //alert(error);
+                },
+                () => {
+                    getDownloadURL(UploadTask.snapshot.ref).then((downloadURL)=>{
+                        console.log(downloadURL);
+                    })
+                }
+                );
+
+                //document.getElementById('certificate-filling-form').style.display='none'
+                popup.classList.add("open-popup")
+                document.getElementById("ok").addEventListener('click',function(){
+        popup.classList.remove("open-popup")
+    
+      })
+    }
+  
+  document.getElementById('submit').addEventListener("click", AddDocument_AutoID);
+
+  //---------------------------------------back button---------------------------------------------------------------------------
+  document.getElementById('back').addEventListener("click",function(){
+    window.location.href='home.html?result='+result
+  })
+  
+  
+  
+  
+  </script>
+
+
+      </body>
+</html>
